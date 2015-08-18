@@ -36,13 +36,7 @@
     <ClInclude Include="MapPiece.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="level01.txt">
-      <Filter>Data</Filter>
-    </Text>
     <Text Include="texturepack01.txt">
-      <Filter>Data</Filter>
-    </Text>
-    <Text Include="texturepack02.txt">
       <Filter>Data</Filter>
     </Text>
   </ItemGroup>

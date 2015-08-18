@@ -4,9 +4,9 @@ TileMap::TileMap()
 	: mSprites(nullptr)
 	, mTiles(nullptr)
 	, mNumSprites(0)
-	, mWidth(0)
-	, mHeight(0)
-	, mTileSize(0)
+	, mWidth(64)
+	, mHeight(64)
+	, mTileSize(32)
 {
 }
 
@@ -16,15 +16,12 @@ TileMap::~TileMap()
 	ASSERT(mTiles == nullptr, "Tiles not unloaded. Potential memory leak.");
 }
 
-void TileMap::Load(const char* layout, const char* texturePack)
+void TileMap::Load(const char* texturePack)
 {
 	ASSERT(mSprites == nullptr, "Tile map already loaded.");
 	ASSERT(mTiles == nullptr, "Tile map already loaded.");
 
-	bool success = LoadLayout(layout);
-	ASSERT(success, "Failed to load layout.");
-
-	success = LoadTexturePack(texturePack);
+	bool success = LoadTexturePack(texturePack);
 	ASSERT(success, "Failed to load texture pack.");
 }
 
@@ -50,14 +47,26 @@ void TileMap::Update(float deltaTime)
 {
 }
 
-void TileMap::Render(const SVector2 renderOffset)
+void TileMap::Render(const SVector2 renderOffset, unsigned int seed)
 {
+	srand(50);
+
 	for (int y = 0; y < mHeight; ++y)
 	{
 		for (int x = 0; x < mWidth; ++x)
 		{
-			const int index = x + (y * mWidth);
-			const int tile = mTiles[index];
+			int pickTile = rand() % 100;
+			int tile;
+			if(pickTile > 3)
+			{
+				tile = 0;
+			}
+			else
+			{
+				pickTile = rand() % 7 + 1;
+				tile = pickTile;
+			}
+
 			SVector2 renderPos(static_cast<float>(x * mTileSize), static_cast<float>(y * mTileSize));
 			renderPos += renderOffset;
 			mSprites[tile].SetPosition(renderPos);

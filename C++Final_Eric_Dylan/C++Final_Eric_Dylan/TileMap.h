@@ -12,10 +12,10 @@ public:
 	TileMap();
 	~TileMap();
 
-	void Load(const char* layout, const char* texturePack);
+	void Load(const char* texturePack);
 	void Unload();
 	void Update(float deltaTime);
-	void Render(const SVector2 renderOffset);
+	void Render(const SVector2 renderOffset, unsigned int seed);
 
 	//TODO for tile based game
 	void Sane(const char* fileName);

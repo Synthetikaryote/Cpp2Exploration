@@ -105,9 +105,7 @@
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="level01.txt" />
     <Text Include="texturepack01.txt" />
-    <Text Include="texturepack02.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
