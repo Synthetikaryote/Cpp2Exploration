@@ -11,19 +11,14 @@ PlayState::~PlayState()
 
 void PlayState::Load()
 {
-	mPlayer.Load("mario_walk_01.png");
+	mPlayer.Load("mario.png");
 
 	int levelSelected = mGameContext.GetCurrentLevel();
 
 	if(levelSelected == 1)
 	{
-		mMap.Load("level01.txt", "texturepack01.txt");
+		mMap.Load("texturepack01.txt");
 	}
-	else
-	{
-		mMap.Load("level01.txt", "texturepack02.txt");
-	}
-
 }
 
 void PlayState::Unload()
@@ -37,8 +32,6 @@ StateTransition PlayState::Update(float deltaTime)
 	mPlayer.Update(deltaTime);
 	mMap.Update(deltaTime);
 
-
-	
 	StateTransition transision = StateTransition::None;
 
 	if(Input_IsKeyPressed(Keys::ESCAPE))
@@ -70,7 +63,7 @@ void PlayState::Render()
 
 	SVector2 renderOffset = -cameraPostition;
 
-	mMap.Render(renderOffset);
+	mMap.Render(renderOffset, 10);
 	mPlayer.Render(renderOffset);
 }
 

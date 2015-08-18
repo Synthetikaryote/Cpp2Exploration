@@ -18,7 +18,6 @@ public:
 private:
 	SGE_Font mFont;
 	SGE_Button mButtonLevel1;
-	SGE_Button mButtonLevel2;
 	SGE_Button mButtonQuit;
 	SGE_Cursor mCursor;
 };
