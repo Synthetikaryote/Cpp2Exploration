@@ -3,7 +3,7 @@
 
 #include "GameState.h"
 #include "Player.h"
-#include "TileMap.h"
+#include "MapPiece.h"
 
 class PlayState : public GameState
 {
@@ -18,7 +18,7 @@ public:
 
 private:
 	Player mPlayer;
-	TileMap mMap;
+	MapPiece mMap;
 };
 
 #endif // #ifndef INCLUDED_PLAYSTATE_H
