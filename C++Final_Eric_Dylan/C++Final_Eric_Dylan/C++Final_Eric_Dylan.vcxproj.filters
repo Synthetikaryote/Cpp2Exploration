@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="FrontEndState.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameContext.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Game States</Filter>
+    </ClCompile>
+    <ClCompile Include="MapPiece.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="FrontEndState.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContext.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Game States</Filter>
+    </ClInclude>
+    <ClInclude Include="MapPiece.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="texturepack01.txt">
+      <Filter>Data</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Data">
+      <UniqueIdentifier>{40d4ad52-9079-463e-855b-22022edc2c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game States">
+      <UniqueIdentifier>{cba1bcd6-3b74-47c1-b1a5-45bcc43a8df8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sge.ini">
+      <Filter>Data</Filter>
+    </None>
+  </ItemGroup>
+</Project>
