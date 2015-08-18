@@ -16,7 +16,6 @@
     <ClCompile Include="PlayState.cpp">
       <Filter>Game States</Filter>
     </ClCompile>
-    <ClCompile Include="MapPiece.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -33,7 +32,6 @@
     <ClInclude Include="PlayState.h">
       <Filter>Game States</Filter>
     </ClInclude>
-    <ClInclude Include="MapPiece.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="texturepack01.txt">

@@ -84,7 +84,6 @@
     <ClCompile Include="FrontEndState.cpp" />
     <ClCompile Include="GameContext.cpp" />
     <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="MapPiece.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="TileMap.cpp" />
@@ -99,7 +98,6 @@
     <ClInclude Include="FrontEndState.h" />
     <ClInclude Include="GameContext.h" />
     <ClInclude Include="GameState.h" />
-    <ClInclude Include="MapPiece.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="TileMap.h" />
