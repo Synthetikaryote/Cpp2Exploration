@@ -121,6 +121,14 @@ void SGE_Sprite::Add(const char* pTextureName)
 
 //----------------------------------------------------------------------------------------------------
 
+void SGE_Sprite::LoadFromSpriteSheet(const char* pTextureName, int tileWidth, int tileHeight) {
+	Load(pTextureName);
+
+	mpSprite->ConvertToSpriteSheet(tileWidth, tileHeight);
+}
+
+//----------------------------------------------------------------------------------------------------
+
 void SGE_Sprite::Unload(void)
 {
 	// Clear texture reference

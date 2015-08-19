@@ -91,6 +91,9 @@ public:
 	void SetAnimationSpeed(float fSpeed);
 	void SetCurrentFrame(int iFrame);
 
+	void ConvertToSpriteSheet(int tileWidth, int tileHeight);
+	int GetFrameCount() const;
+
 protected:
 	// Members
 	std::vector<CTexture*> mpTextures;
@@ -113,6 +116,9 @@ protected:
 
 	bool mPlay;					// True when playing
 	bool mLoopOnce;				// True if we only want to loop once
+
+	bool mIsSpriteSheet;
+	int mTileWidth, mTileHeight;
 };
 
 #endif // #ifndef INCLUDED_SPRITE_H

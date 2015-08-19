@@ -49,6 +49,7 @@ public:
 
 	void Load(const char* pTextureName);
 	void Add(const char* pTextureName);
+	void LoadFromSpriteSheet(const char* pTextureName, int tileWidth, int tileHeight);
 	void Unload(void);
 
 	void Update(float fSeconds);

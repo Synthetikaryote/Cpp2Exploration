@@ -32,6 +32,7 @@ CSprite::CSprite(void)
 	, mCurrentFrame(0)
 	, mPlay(false)
 	, mLoopOnce(false)
+	, mIsSpriteSheet(false)
 {
 	// Empty
 }
@@ -54,7 +55,7 @@ void CSprite::Update(float fSeconds)
 		mAnimationTime += mAnimationSpeed * fSeconds;
 		
 		// Calculate the current frame to use
-		const int kNumFrames = static_cast<int>(mpTextures.size());
+		const int kNumFrames = GetFrameCount();
 		if (kNumFrames > 0)
 		{
 			const int kFrameIndex = static_cast<int>(mAnimationTime * mAnimationSpeed);
@@ -77,6 +78,13 @@ void CSprite::Update(float fSeconds)
 	}
 }
 
+//----------------------------------------------------------------------------------------------------
+
+void CSprite::ConvertToSpriteSheet(int tileWidth, int tileHeight) {
+	mIsSpriteSheet = true;
+	mTileWidth = tileWidth;
+	mTileHeight = tileHeight;
+}
 //----------------------------------------------------------------------------------------------------
 
 void CSprite::Render(void)
@@ -135,9 +143,24 @@ void CSprite::Render(void)
 	D3DXMATRIX matWorld;
 	matWorld = matPreFlip * matFlip * matPostFlip * matCombined * matDepth;
 
-	// Set transform and render the sprite
+	// Set transform
 	CSpriteRenderer::Get()->D3DXSprite()->SetTransform(&matWorld);
-	CSpriteRenderer::Get()->D3DXSprite()->Draw(pTexture->GetTexture(), NULL, NULL, NULL, mColor);
+
+	// find the source rect
+	if (mIsSpriteSheet) {
+		RECT source;
+		int tilesPerRow = pTexture->GetWidth() / mTileWidth;
+		source.left = (mCurrentFrame % tilesPerRow) * mTileWidth;
+		source.top = (mCurrentFrame / tilesPerRow) * mTileHeight;
+		source.right = source.left + mTileWidth;
+		source.bottom = source.top + mTileHeight;
+
+		// render the sprite
+		CSpriteRenderer::Get()->D3DXSprite()->Draw(pTexture->GetTexture(), &source, NULL, NULL, mColor);
+	} else {
+		// render the sprite
+		CSpriteRenderer::Get()->D3DXSprite()->Draw(pTexture->GetTexture(), NULL, NULL, NULL, mColor);
+	}
 
 #if 0
 	// Draw original
@@ -182,9 +205,13 @@ void CSprite::AddTexture(CTexture* pTexture)
 const CTexture* CSprite::GetTexture(void) const
 {
 	CTexture* pTexture = NULL;
-	if (mpTextures.size() > 0)
-	{
-		pTexture = mpTextures[mCurrentFrame];
+	if (mpTextures.size() > 0) {
+		if (mIsSpriteSheet) {
+			pTexture = mpTextures[0];
+		}
+		else {
+			pTexture = mpTextures[mCurrentFrame];
+		}
 	}
 	return pTexture;
 }
@@ -202,13 +229,17 @@ void CSprite::GetDimension(int& iWidth, int& iHeight) const
 {
 	// Get the current frame to use
 	const CTexture* pTexture = GetTexture();
-	if (NULL != pTexture)
-	{
-		iWidth = static_cast<int>(pTexture->GetWidth() * mScale.x);
-		iHeight = static_cast<int>(pTexture->GetHeight() * mScale.y);
+	if (NULL != pTexture) {
+		if (mIsSpriteSheet) {
+			iWidth = mTileWidth * mScale.x;
+			iHeight = mTileHeight * mScale.y;
+		}
+		else {
+			iWidth = static_cast<int>(pTexture->GetWidth() * mScale.x);
+			iHeight = static_cast<int>(pTexture->GetHeight() * mScale.y);
+		}
 	}
-	else
-	{
+	else {
 		iWidth = 0;
 		iHeight = 0;
 	}
@@ -373,7 +404,7 @@ void CSprite::Stop(void)
 
 void CSprite::Step(void)
 {
-	const int kNumFrames = static_cast<int>(mpTextures.size());
+	const int kNumFrames = GetFrameCount();
 	if (kNumFrames > 0)
 	{
 		mCurrentFrame = ++mCurrentFrame % kNumFrames;
@@ -397,7 +428,7 @@ bool CSprite::IsFinished(void) const
 		return false;
 	}
 
-	const int kNumFrames = static_cast<int>(mpTextures.size());
+	const int kNumFrames = GetFrameCount();
 	if (kNumFrames <= 0)
 	{
 		return false;
@@ -406,6 +437,20 @@ bool CSprite::IsFinished(void) const
 	const float durationPerFrame = 1.0f / mAnimationSpeed;
 	const float duration = durationPerFrame * kNumFrames;
 	return mAnimationTime >= duration;
+}
+
+//----------------------------------------------------------------------------------------------------
+
+int CSprite::GetFrameCount() const {
+	if (mIsSpriteSheet) {
+		auto texture = GetTexture();
+		int columns = texture->GetWidth() / mTileWidth;
+		int rows = texture->GetHeight() / mTileHeight;
+		return columns * rows;
+	}
+	else {
+		return static_cast<int>(mpTextures.size());
+	}
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -433,7 +478,7 @@ void CSprite::SetAnimationSpeed(float fSpeed)
 
 void CSprite::SetCurrentFrame(int iFrame)
 {
-	const int kNumFrames = static_cast<int>(mpTextures.size());
+	const int kNumFrames = GetFrameCount();
 	if (iFrame < kNumFrames)
 	{
 		mCurrentFrame = iFrame;
