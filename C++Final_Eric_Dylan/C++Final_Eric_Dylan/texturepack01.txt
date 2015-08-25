@@ -1,9 +1,0 @@
-NumTextures: 8
-grass0.png
-grass1.png
-grass2.png
-grass3.png
-grass4.png
-grass5.png
-grass6.png
-grass7.png
