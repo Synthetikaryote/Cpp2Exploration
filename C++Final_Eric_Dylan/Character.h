@@ -8,6 +8,7 @@ public:
 	Character();
 	~Character();
 	Sprite sprite;
+	int x, y, ox, oy;
 	virtual void Update(float elapsed);
 	virtual void Draw(CHAR_INFO* buffer, int bufferWidth, int bufferHeight);
 };
