@@ -16,11 +16,13 @@ public:
 		return instance;
 	}
 
-	Map map;
-	Player player;
-	vector<Character*> characters;
 	const int sectorWidth = 64;
 	const int sectorHeight = 64;
+
+	Map map;
+
+	Player player;
+	vector<Character*> characters;
 
 private:
 	Uber() {};                   // Constructor? (the {} brackets) are needed here.

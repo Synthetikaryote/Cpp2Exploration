@@ -55,9 +55,6 @@ int main() {
 
 	initGame();
 
-
-	Sector test(12345);
-
 	while (1) {
 		float t = time();
 
@@ -87,7 +84,7 @@ void initGame() {
 }
 
 void update(float elapsed) {
-	uber.map.Update(elapsed);
+	uber.map.Update(elapsed, 0, 0);
 	// update the characters
 	for (Character* character : uber.characters) {
 		character->Update(elapsed);
@@ -95,7 +92,7 @@ void update(float elapsed) {
 }
 
 void draw(CHAR_INFO* buffer) {
-	uber.map.Draw(buffer, 0, 0);
+	uber.map.Draw(buffer, screenWidth, screenHeight, 0, 0);
 	// draw everything
 	for (Character* character : uber.characters) {
 		character->Draw(buffer, screenWidth, screenHeight);
