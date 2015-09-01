@@ -6,10 +6,10 @@
 using namespace std;
 using namespace std::chrono;
 
-float targetFramesPerSecond = 100.0f;
+float targetFramesPerSecond = 80.0f;
 float spf = 1.0f / targetFramesPerSecond;
-const int screenWidth = 200;
-const int screenHeight = 80;
+const int screenWidth = 128;
+const int screenHeight = 64;
 
 high_resolution_clock::time_point timeStart = high_resolution_clock::now();
 float time() {
@@ -33,12 +33,21 @@ int main() {
 	float lastFrame = 0.0f;
 
 	HANDLE hOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+
+	CONSOLE_FONT_INFOEX info{ sizeof(CONSOLE_FONT_INFOEX) };
+	if (GetCurrentConsoleFontEx(hOutput, false, &info)) {
+		COORD dwFontSize = { 8, 8 };
+		info.dwFontSize = dwFontSize;
+		SetCurrentConsoleFontEx(hOutput, false, &info);
+	}
+
 	CHAR_INFO buffer[screenHeight][screenWidth];
 	COORD dwBufferSize = { screenWidth, screenHeight };
 	COORD dwBufferCoord = { 0, 0 };
 	SMALL_RECT rcRegion = { 0, 0, screenWidth - 1, screenHeight - 1 };
 	SetConsoleWindowInfo(hOutput, TRUE, &rcRegion);
 	SetConsoleScreenBufferSize(hOutput, dwBufferSize);
+
 
 	while (1) {
 		float t = time();
@@ -56,7 +65,7 @@ int main() {
 			for (int r = 0; r < screenHeight; ++r) {
 				for (int c = 0; c < screenWidth; ++c) {
 					buffer[r][c].Char.AsciiChar = (char)(rand() % 255);
-					buffer[r][c].Attributes = 0x0F;
+					buffer[r][c].Attributes = 0x08; //(char)(rand() % 256);
 				}
 			}
 
