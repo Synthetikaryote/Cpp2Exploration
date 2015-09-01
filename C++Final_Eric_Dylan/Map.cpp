@@ -5,10 +5,6 @@
 
 Map::Map()
 {
-	Sector* newSector = new Sector(1234,0,0);
-	mSectors.push_back(newSector);
-	//newSector = new Sector(4312,1,0);
-	//mSectors.push_back(newSector);
 }
 
 
@@ -62,7 +58,7 @@ void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 			}
 			if(!loaded)
 			{
-				newMap.push_back(new Sector(123456, x + X, y + Y));
+				newMap.push_back(new Sector(1234, x + X, y + Y));
 			}
         }
         if( (x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1-y))){

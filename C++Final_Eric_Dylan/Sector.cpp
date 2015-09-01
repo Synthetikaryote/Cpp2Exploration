@@ -1,8 +1,19 @@
 #include "Sector.h"
 #include "Uber.h"
+#include <sstream>
+#include <string>
+
 Sector::Sector(int seed, int locX, int locY)
 {
-	srand(seed);
+	string seedKey;
+	stringstream strs;
+	strs << seed << locX << locY;
+	seedKey = strs.str();
+
+
+
+	srand(stoi(seedKey));
+
 	Uber &uber = Uber::getInstance();
 	mSprite = new Sprite(uber.sectorWidth, uber.sectorHeight);
 
@@ -12,7 +23,7 @@ Sector::Sector(int seed, int locX, int locY)
 		{
 			int spawn = rand() % 100;
 			
-			mSprite->data[i * uber.sectorWidth + j].Attributes = 0x08;
+			mSprite->data[i * uber.sectorWidth + j].Attributes = 0x2F;
 
 			if(spawn < 10)
 			{
@@ -35,3 +46,4 @@ Sector::~Sector()
 {
 	delete mSprite;
 }
+
