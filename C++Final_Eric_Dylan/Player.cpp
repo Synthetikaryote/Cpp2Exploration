@@ -34,7 +34,7 @@ void Player::Update(float elapsed) {
 	if (uber.IsKeyDown(VK_DOWN)) dy++;
 	float d = sqrt(dx * dx + dy * dy);
 	if (d > 0) {
-		x += (dx / d * moveSpeed * elapsed);
-		y += (dy / d * moveSpeed * elapsed);
+		x += dx / d * moveSpeed * elapsed;
+		y += dy / d * moveSpeed * elapsed;
 	}
 }
