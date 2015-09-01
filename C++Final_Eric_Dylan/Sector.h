@@ -6,10 +6,10 @@
 class Sector
 {
 public:
-	Sector(int seed);
+	Sector(int seed, int locX, int locY);
 	~Sector();
 
-	int locX, locY;
+	int mlocX, mlocY;
 
 	Sprite* mSprite;
 };
