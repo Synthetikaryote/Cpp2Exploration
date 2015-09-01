@@ -3,12 +3,12 @@
 Sector::Sector(int seed)
 {
 	srand(seed);
-	mSprite = new Sprite(64,64);
 	Uber &uber = Uber::getInstance();
+	mSprite = new Sprite(uber.sectorWidth, uber.sectorHeight);
 
-	for(unsigned int i = 0; i < uber.sectorHeight; ++i)
+	for(int i = 0; i < uber.sectorWidth; ++i)
 	{
-		for(unsigned int j = 0; j < uber.sectorWidth; ++j)
+		for(int j = 0; j < uber.sectorHeight; ++j)
 		{
 			int spawn = rand() % 100;
 			
