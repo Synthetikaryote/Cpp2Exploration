@@ -1,6 +1,4 @@
 #include "Map.h"
-#include <Windows.h>
-
 
 Map::Map()
 {
@@ -15,6 +13,6 @@ void Map::Update(float elapsed) {
 
 }
 
-void Map::Draw(CHAR_INFO* buffer) {
+void Map::Draw(CHAR_INFO* buffer, int x, int y) {
 
 }

@@ -95,7 +95,7 @@ void update(float elapsed) {
 }
 
 void draw(CHAR_INFO* buffer) {
-	uber.map.Draw(buffer);
+	uber.map.Draw(buffer, 0, 0);
 	// draw everything
 	for (Sprite* sprite : uber.sprites) {
 		sprite->Draw(buffer, screenWidth, screenHeight);
