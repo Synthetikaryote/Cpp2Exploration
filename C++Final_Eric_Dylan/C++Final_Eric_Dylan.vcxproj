@@ -64,14 +64,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Sector.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Uber.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Character.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Sector.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Uber.h" />

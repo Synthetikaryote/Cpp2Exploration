@@ -6,11 +6,15 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Sector.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Character.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Uber.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Sector.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Character.h" />
   </ItemGroup>
 </Project>

@@ -8,7 +8,9 @@ class Sprite
 public:
 	CHAR_INFO* data;
 	int x, y, w, h;
+	Sprite();
 	Sprite(int width, int height);
+	void SetSize(int width, int height);
 	~Sprite();
 	void SetData(string characters);
 

@@ -1,14 +1,20 @@
 #include "Sprite.h"
 
+Sprite::Sprite() {
+}
 Sprite::Sprite(int width, int height) {
-	w = width;
-	h = height;
-	data = new CHAR_INFO[height * width];
+	SetSize(width, height);
 }
 
 Sprite::~Sprite()
 {
 	delete[] data;
+}
+
+void Sprite::SetSize(int width, int height) {
+	w = width;
+	h = height;
+	data = new CHAR_INFO[height * width];
 }
 
 void Sprite::Update(float elapsed) {

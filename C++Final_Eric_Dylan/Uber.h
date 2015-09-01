@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Map.h"
-#include "Sprite.h"
+#include "Character.h"
 #include <vector>
+#include "Player.h"
 using namespace std;
 
 // singleton design pattern from here:
@@ -16,8 +17,8 @@ public:
 	}
 
 	Map map;
-	
-	vector<Sprite*> sprites;
+	Player player;
+	vector<Character*> characters;
 	const int sectorWidth = 64;
 	const int sectorHeight = 64;
 
