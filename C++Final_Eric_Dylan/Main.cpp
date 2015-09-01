@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <chrono>
 #include "Uber.h"
+#include "Sector.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -11,7 +12,7 @@ float spf = 1.0f / targetFramesPerSecond;
 const int screenWidth = 64;
 const int screenHeight = 64;
 
-Uber uber;
+Uber &uber = Uber::getInstance();
 void initGame();
 
 high_resolution_clock::time_point timeStart = high_resolution_clock::now();
@@ -53,6 +54,9 @@ int main() {
 
 	initGame();
 
+
+	Sector test(12345);
+
 	while (1) {
 		float t = time();
 
@@ -73,7 +77,7 @@ int main() {
 				}
 			}
 
-			WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
+			WriteConsoleOutput(hOutput, (CHAR_INFO *)test.mSprite->buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 
 			// show FPS
 			moveCursor(0, 0);
