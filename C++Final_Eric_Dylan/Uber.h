@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Map.h"
+#include "Sprite.h"
+#include <vector>
+using namespace std;
 
 // singleton design pattern from here:
 // http://stackoverflow.com/questions/1008019/c-singleton-design-pattern
@@ -13,6 +16,7 @@ public:
 	}
 
 	Map map;
+	vector<Sprite> sprites;
 
 private:
 	Uber() {};                   // Constructor? (the {} brackets) are needed here.

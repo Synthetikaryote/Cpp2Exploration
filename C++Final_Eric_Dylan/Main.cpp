@@ -8,8 +8,11 @@ using namespace std::chrono;
 
 float targetFramesPerSecond = 80.0f;
 float spf = 1.0f / targetFramesPerSecond;
-const int screenWidth = 128;
+const int screenWidth = 64;
 const int screenHeight = 64;
+
+Uber uber;
+void initGame();
 
 high_resolution_clock::time_point timeStart = high_resolution_clock::now();
 float time() {
@@ -48,6 +51,7 @@ int main() {
 	SetConsoleWindowInfo(hOutput, TRUE, &rcRegion);
 	SetConsoleScreenBufferSize(hOutput, dwBufferSize);
 
+	initGame();
 
 	while (1) {
 		float t = time();
@@ -65,7 +69,7 @@ int main() {
 			for (int r = 0; r < screenHeight; ++r) {
 				for (int c = 0; c < screenWidth; ++c) {
 					buffer[r][c].Char.AsciiChar = (char)(rand() % 255);
-					buffer[r][c].Attributes = 0x08; //(char)(rand() % 256);
+					buffer[r][c].Attributes = 0x28; //(char)(rand() % 256);
 				}
 			}
 
@@ -78,4 +82,8 @@ int main() {
 	}
 
 	system("pause");
+}
+
+void initGame() {
+
 }
