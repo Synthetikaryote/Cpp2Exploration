@@ -16,7 +16,10 @@ public:
 	}
 
 	Map map;
+	
 	vector<Sprite> sprites;
+	const int sectorWidth = 64;
+	const int sectorHeight = 64;
 
 private:
 	Uber() {};                   // Constructor? (the {} brackets) are needed here.

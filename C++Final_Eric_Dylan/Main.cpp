@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <chrono>
 #include "Uber.h"
+#include "Sector.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -11,7 +12,7 @@ float spf = 1.0f / targetFramesPerSecond;
 const int screenWidth = 64;
 const int screenHeight = 64;
 
-Uber uber;
+Uber &uber = Uber::getInstance();
 void initGame();
 void update(float elapsed);
 void draw(CHAR_INFO** buffer);
@@ -55,6 +56,9 @@ int main() {
 
 	initGame();
 
+
+	Sector test(12345);
+
 	while (1) {
 		float t = time();
 
@@ -66,6 +70,7 @@ int main() {
 			update(elapsed);
 
 			draw((CHAR_INFO**)buffer);
+			WriteConsoleOutput(hOutput, (CHAR_INFO *)test.mSprite->buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 
 			WriteConsoleOutput(hOutput, (CHAR_INFO*)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 
