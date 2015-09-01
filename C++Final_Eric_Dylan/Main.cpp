@@ -63,6 +63,10 @@ int main() {
 			float elapsed = t - lastFrame;
 			lastFrame = t;
 
+			if (uber.IsKeyDown(VK_ESCAPE)) {
+				break;
+			}
+
 			update(elapsed);
 
 			draw(buffer);
@@ -71,11 +75,9 @@ int main() {
 
 			// show FPS
 			moveCursor(0, 0);
-			cout << "FPS: " << (int)(1.0f / elapsed);
+			cout << "FPS: " << (int)(1.0f / elapsed) << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
 		}
 	}
-
-	system("pause");
 }
 
 void initGame() {
@@ -88,9 +90,10 @@ void update(float elapsed) {
 	for (Character* character : uber.characters) {
 		character->Update(elapsed);
 	}
+
+	// update the map
 	uber.map.viewX = -uber.player.x;
 	uber.map.viewY = -uber.player.y;
-
 	uber.map.Update(elapsed);
 }
 

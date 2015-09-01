@@ -24,6 +24,9 @@ public:
 	Player player;
 	vector<Character*> characters;
 
+	bool IsKeyDown(int vk) {
+		return (GetAsyncKeyState(vk) & 0x8000);
+	}
 private:
 	Uber() {};                   // Constructor? (the {} brackets) are needed here.
 
