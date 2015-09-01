@@ -3,6 +3,7 @@
 #include <chrono>
 #include "Uber.h"
 #include "Sector.h"
+#include <sstream>
 
 using namespace std;
 using namespace std::chrono;
@@ -11,6 +12,8 @@ float targetFramesPerSecond = 80.0f;
 float spf = 1.0f / targetFramesPerSecond;
 const int screenWidth = 64;
 const int screenHeight = 64;
+
+int calculatedFPS = 0;
 
 Uber &uber = Uber::getInstance();
 void initGame();
@@ -70,12 +73,8 @@ int main() {
 			update(elapsed);
 
 			draw(buffer);
-			
-			WriteConsoleOutput(hOutput, (CHAR_INFO*)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 
-			// show FPS
-			moveCursor(0, 0);
-			cout << "FPS: " << (int)(1.0f / elapsed) << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
+			WriteConsoleOutput(hOutput, (CHAR_INFO*)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 		}
 	}
 }
@@ -112,6 +111,8 @@ void update(float elapsed) {
 	uber.map.viewX = -(uber.player.x - screenWidth / 2);
 	uber.map.viewY = -(uber.player.y - screenHeight / 2);
 	uber.map.Update(elapsed);
+
+	calculatedFPS = (int)(1.0f / elapsed);
 }
 
 void draw(CHAR_INFO* buffer) {
@@ -120,4 +121,9 @@ void draw(CHAR_INFO* buffer) {
 	for (Character* character : uber.characters) {
 		character->Draw(buffer, screenWidth, screenHeight);
 	}
+
+	// show FPS
+	stringstream message;
+	message << "FPS: " << calculatedFPS << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
+	uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 1);
 }
