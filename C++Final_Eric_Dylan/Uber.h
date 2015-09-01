@@ -23,6 +23,7 @@ public:
 
 	Player player;
 	vector<Character*> characters;
+	Sprite tree;
 
 	bool IsKeyDown(int vk) {
 		return GetAsyncKeyState(vk) & 0x8000;

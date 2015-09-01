@@ -88,6 +88,18 @@ void initGame() {
 	uber.player.y = screenHeight / 2;
 	uber.player.sprite.x = uber.player.x + uber.player.ox;
 	uber.player.sprite.y = uber.player.y + uber.player.oy;
+
+	uber.tree.SetSize(3,4);
+	uber.tree.SetData(
+		" ^ "
+		"/|\\"
+		"/|\\"
+		"^|^");
+	uber.tree.SetColors(
+		"\x2B\x2B\x2B"
+		"\x2B\x2B\x2B"
+		"\x2B\x2B\x2B"
+		"\x2B\x2B\x2B");
 }
 
 void update(float elapsed) {
