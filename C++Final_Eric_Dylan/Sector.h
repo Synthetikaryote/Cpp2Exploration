@@ -9,6 +9,8 @@ public:
 	Sector(int seed);
 	~Sector();
 
+	int locX, locY;
+
 	Sprite* mSprite;
 };
 
