@@ -2,8 +2,8 @@
 
 #include "Map.h"
 #include "Character.h"
-#include <vector>
 #include "Player.h"
+#include <vector>
 using namespace std;
 
 // singleton design pattern from here:
