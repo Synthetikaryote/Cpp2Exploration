@@ -84,15 +84,18 @@ void initGame() {
 }
 
 void update(float elapsed) {
-	uber.map.Update(elapsed, 0, 0);
 	// update the characters
 	for (Character* character : uber.characters) {
 		character->Update(elapsed);
 	}
+	uber.map.viewX = -uber.player.x;
+	uber.map.viewY = -uber.player.y;
+
+	uber.map.Update(elapsed);
 }
 
 void draw(CHAR_INFO* buffer) {
-	uber.map.Draw(buffer, screenWidth, screenHeight, 0, 0);
+	uber.map.Draw(buffer, screenWidth, screenHeight);
 	// draw everything
 	for (Character* character : uber.characters) {
 		character->Draw(buffer, screenWidth, screenHeight);

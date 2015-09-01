@@ -15,11 +15,11 @@ Map::~Map()
 	mSectors.clear();
 }
 
-void Map::Update(float elapsed, int x, int y) {
+void Map::Update(float elapsed) {
 
 }
 
-void Map::Draw(CHAR_INFO* buffer, int bufferWidth, int bufferHight, int x, int y) {	
+void Map::Draw(CHAR_INFO* buffer, int bufferWidth, int bufferHight) {	
 	for (Sector* sector : mSectors) {
 		sector->mSprite->Draw(buffer, bufferWidth, bufferHight);
 	}

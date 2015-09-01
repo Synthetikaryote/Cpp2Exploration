@@ -10,8 +10,9 @@ public:
 	Map();
 	~Map();
 
-	void Update(float elapsed, int x, int y);
-	void Draw(CHAR_INFO* buffer, int bufferHight, int bufferWidth, int x, int y);
+	int viewX, viewY;
+	void Update(float elapsed);
+	void Draw(CHAR_INFO* buffer, int bufferHight, int bufferWidth);
 
 	vector<Sector*> mSectors;
 };
