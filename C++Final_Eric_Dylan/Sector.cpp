@@ -1,6 +1,6 @@
 #include "Sector.h"
 #include "Uber.h"
-Sector::Sector(int seed)
+Sector::Sector(int seed, int locX, int locY)
 {
 	srand(seed);
 	Uber &uber = Uber::getInstance();
@@ -24,7 +24,10 @@ Sector::Sector(int seed)
 			}
 		}
 	}
-
+	mlocX = locX;
+	mlocY = locY;
+	mSprite->x = locX * 64;
+	mSprite->y = locY * 64;
 }
 
 
