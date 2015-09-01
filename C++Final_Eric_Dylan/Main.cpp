@@ -13,6 +13,8 @@ const int screenHeight = 64;
 
 Uber uber;
 void initGame();
+void update(float elapsed);
+void draw(CHAR_INFO** buffer);
 
 high_resolution_clock::time_point timeStart = high_resolution_clock::now();
 float time() {
@@ -56,24 +58,16 @@ int main() {
 	while (1) {
 		float t = time();
 
-		GetKeyboardState(keys);
-		if (keys[VK_ESCAPE] & 1) {
-			break;
-		}
-
 		// redraw 60 fps
 		if (t - lastFrame >= spf) {
 			float elapsed = t - lastFrame;
 			lastFrame = t;
 
-			for (int r = 0; r < screenHeight; ++r) {
-				for (int c = 0; c < screenWidth; ++c) {
-					buffer[r][c].Char.AsciiChar = (char)(rand() % 255);
-					buffer[r][c].Attributes = 0x28; //(char)(rand() % 256);
-				}
-			}
+			update(elapsed);
 
-			WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
+			draw((CHAR_INFO**)buffer);
+
+			WriteConsoleOutput(hOutput, (CHAR_INFO*)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 
 			// show FPS
 			moveCursor(0, 0);
@@ -85,5 +79,19 @@ int main() {
 }
 
 void initGame() {
+	
+}
 
+void update(float elapsed) {
+	// update everything
+	for (Sprite sprite : uber.sprites) {
+		sprite.Update(elapsed);
+	}
+}
+
+void draw(CHAR_INFO** buffer) {
+	// draw everything
+	for (Sprite sprite : uber.sprites) {
+		sprite.Draw((CHAR_INFO**)buffer, screenWidth, screenHeight);
+	}
 }

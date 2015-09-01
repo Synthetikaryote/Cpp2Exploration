@@ -5,10 +5,12 @@
     <ClCompile Include="Uber.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Sector.cpp" />
+    <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Uber.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Sector.h" />
+    <ClInclude Include="Sprite.h" />
   </ItemGroup>
 </Project>

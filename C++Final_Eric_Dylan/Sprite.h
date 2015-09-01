@@ -6,14 +6,13 @@ using namespace std;
 class Sprite
 {
 public:
-	CHAR_INFO** buffer;
-	int width;
-	int height;
+	CHAR_INFO** data;
+	int x, y, w, h;
 	Sprite(int width, int height);
 	~Sprite();
 	void SetData(string characters);
 
 	void Update(float elapsed);
-	void Draw(CHAR_INFO* buffer);
+	void Draw(CHAR_INFO** buffer, int bufferWidth, int bufferHeight);
 };
 
