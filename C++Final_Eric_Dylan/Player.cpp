@@ -2,6 +2,29 @@
 #include "Uber.h"
 
 Player::Player() {
+	sprite.SetSize(6, 8);
+
+	// some kinda robot
+	sprite.SetData(
+		" -  - "
+		" (^^) "
+		"  --  "
+		"/|##|\\"
+		"||##||"
+		"^|__|^"
+		" |  | "
+		"()  ()");
+	sprite.SetColors(
+		"\x0F\x8F\x8F\x8F\x8F\x0F"
+		"\x0F\x8F\x8B\x8B\x8F\x0F"
+		"\x0F\x0F\x8F\x8F\x0F\x0F"
+		"\x8F\x8F\x8F\x8F\x8F\x8F"
+		"\x0F\x8F\x8F\x8F\x8F\x0F"
+		"\x0F\x8F\x8F\x8F\x8F\x0F"
+		"\x0F\x8F\x0F\x0F\x8F\x0F"
+		"\x8F\x8F\x0F\x0F\x8F\x8F");
+	ox = -3;
+	oy = -6;
 }
 
 Player::~Player() {

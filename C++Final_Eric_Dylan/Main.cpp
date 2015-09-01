@@ -83,6 +83,11 @@ int main() {
 void initGame() {
 	// add the player to the list of characters
 	uber.characters.push_back(&(uber.player));
+
+	uber.player.x = screenWidth / 2;
+	uber.player.y = screenHeight / 2;
+	uber.player.sprite.x = uber.player.x + uber.player.ox;
+	uber.player.sprite.y = uber.player.y + uber.player.oy;
 }
 
 void update(float elapsed) {
@@ -92,8 +97,8 @@ void update(float elapsed) {
 	}
 
 	// update the map
-	uber.map.viewX = -uber.player.x;
-	uber.map.viewY = -uber.player.y;
+	uber.map.viewX = -(uber.player.x - screenWidth / 2);
+	uber.map.viewY = -(uber.player.y - screenHeight / 2);
 	uber.map.Update(elapsed);
 }
 

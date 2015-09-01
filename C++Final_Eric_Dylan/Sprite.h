@@ -13,6 +13,7 @@ public:
 	~Sprite();
 	void SetSize(int width, int height);
 	void SetData(string characters);
+	void SetColors(string colors);
 
 	void Update(float elapsed);
 	void Draw(CHAR_INFO* buffer, int bufferWidth, int bufferHeight);
