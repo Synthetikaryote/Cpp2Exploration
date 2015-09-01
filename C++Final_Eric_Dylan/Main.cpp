@@ -96,10 +96,10 @@ void initGame() {
 		"/|\\"
 		"^|^");
 	uber.tree.SetColors(
-		"\x2B\x2B\x2B"
-		"\x2B\x2B\x2B"
-		"\x2B\x2B\x2B"
-		"\x2B\x2B\x2B");
+		"\x2A\x2A\x2A"
+		"\x2A\x2E\x2A"
+		"\x2A\x2E\x2A"
+		"\x2A\x2E\x2A");
 }
 
 void update(float elapsed) {

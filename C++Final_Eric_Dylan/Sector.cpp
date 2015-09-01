@@ -23,15 +23,17 @@ Sector::Sector(int seed, int locX, int locY)
 		{
 			int spawn = rand() % 100;
 			
-			mSprite->data[i * uber.sectorWidth + j].Attributes = 0x2F;
+			mSprite->data[j * uber.sectorWidth + i].Attributes = 0x2F;
 
-			if(spawn < 10)
+			if (spawn < 1 && i >= uber.tree.w && j >= uber.tree.h)
 			{
-				mSprite->data[i * uber.sectorWidth + j].Char.AsciiChar = 't';
+				uber.tree.x = i - uber.tree.w + 1;
+				uber.tree.y = j - uber.tree.h + 1;
+				uber.tree.Draw(mSprite->data, uber.sectorWidth, uber.sectorHeight);
 			}
 			else
 			{
-				mSprite->data[i * uber.sectorWidth + j].Char.AsciiChar = ' ';
+				mSprite->data[j * uber.sectorWidth + i].Char.AsciiChar = ' ';
 			}
 		}
 	}
