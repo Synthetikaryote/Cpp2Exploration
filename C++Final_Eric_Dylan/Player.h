@@ -8,7 +8,7 @@ class Player : public Character
 public:
 	Player();
 	~Player();
-	float moveSpeed = 5.0f;
+	float moveSpeed = 25.0f;
 	void Update(float elapsed) override;
 };
 

@@ -10,8 +10,8 @@ public:
 	int x, y, w, h;
 	Sprite();
 	Sprite(int width, int height);
-	void SetSize(int width, int height);
 	~Sprite();
+	void SetSize(int width, int height);
 	void SetData(string characters);
 
 	void Update(float elapsed);
