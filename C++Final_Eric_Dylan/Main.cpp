@@ -87,6 +87,7 @@ void initGame() {
 }
 
 void update(float elapsed) {
+	uber.map.Update(elapsed);
 	// update everything
 	for (Sprite* sprite : uber.sprites) {
 		sprite->Update(elapsed);
@@ -94,6 +95,7 @@ void update(float elapsed) {
 }
 
 void draw(CHAR_INFO* buffer) {
+	uber.map.Draw(buffer);
 	// draw everything
 	for (Sprite* sprite : uber.sprites) {
 		sprite->Draw(buffer, screenWidth, screenHeight);
