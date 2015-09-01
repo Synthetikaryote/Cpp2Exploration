@@ -12,15 +12,15 @@ Sector::Sector(int seed)
 		{
 			int spawn = rand() % 100;
 			
-			mSprite->buffer[i][j].Attributes = 0x08;
+			mSprite->data[i * uber.sectorWidth + j].Attributes = 0x08;
 
 			if(spawn < 10)
 			{
-				mSprite->buffer[i][j].Char.AsciiChar = 't';
+				mSprite->data[i * uber.sectorWidth + j].Char.AsciiChar = 't';
 			}
 			else
 			{
-				mSprite->buffer[i][j].Char.AsciiChar = ' ';
+				mSprite->data[i * uber.sectorWidth + j].Char.AsciiChar = ' ';
 			}
 		}
 	}

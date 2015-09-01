@@ -15,7 +15,7 @@ const int screenHeight = 64;
 Uber &uber = Uber::getInstance();
 void initGame();
 void update(float elapsed);
-void draw(CHAR_INFO** buffer);
+void draw(CHAR_INFO* buffer);
 
 high_resolution_clock::time_point timeStart = high_resolution_clock::now();
 float time() {
@@ -32,7 +32,6 @@ void moveCursor(int x, int y) {
 }
 
 int main() {
-	byte keys[256];
 	int i = 0;
 
 	float lastTime = 0.0f;
@@ -47,7 +46,7 @@ int main() {
 		SetCurrentConsoleFontEx(hOutput, false, &info);
 	}
 
-	CHAR_INFO buffer[screenHeight][screenWidth];
+	CHAR_INFO buffer[screenHeight * screenWidth];
 	COORD dwBufferSize = { screenWidth, screenHeight };
 	COORD dwBufferCoord = { 0, 0 };
 	SMALL_RECT rcRegion = { 0, 0, screenWidth - 1, screenHeight - 1 };
@@ -58,6 +57,7 @@ int main() {
 
 
 	Sector test(12345);
+	uber.sprites.push_back(test.mSprite);
 
 	while (1) {
 		float t = time();
@@ -69,9 +69,8 @@ int main() {
 
 			update(elapsed);
 
-			draw((CHAR_INFO**)buffer);
-			WriteConsoleOutput(hOutput, (CHAR_INFO *)test.mSprite->buffer, dwBufferSize, dwBufferCoord, &rcRegion);
-
+			draw(buffer);
+			
 			WriteConsoleOutput(hOutput, (CHAR_INFO*)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 
 			// show FPS
@@ -89,14 +88,14 @@ void initGame() {
 
 void update(float elapsed) {
 	// update everything
-	for (Sprite sprite : uber.sprites) {
-		sprite.Update(elapsed);
+	for (Sprite* sprite : uber.sprites) {
+		sprite->Update(elapsed);
 	}
 }
 
-void draw(CHAR_INFO** buffer) {
+void draw(CHAR_INFO* buffer) {
 	// draw everything
-	for (Sprite sprite : uber.sprites) {
-		sprite.Draw((CHAR_INFO**)buffer, screenWidth, screenHeight);
+	for (Sprite* sprite : uber.sprites) {
+		sprite->Draw(buffer, screenWidth, screenHeight);
 	}
 }

@@ -17,7 +17,7 @@ public:
 
 	Map map;
 	
-	vector<Sprite> sprites;
+	vector<Sprite*> sprites;
 	const int sectorWidth = 64;
 	const int sectorHeight = 64;
 
