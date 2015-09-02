@@ -1,8 +1,17 @@
 #pragma once
 #include "Character.h"
 #include <Windows.h>
+#include <vector>
+using namespace std;
 
-
+struct point {
+	int x, y;
+	point() {}
+	point(int x, int y) {
+		this->x = x;
+		this->y = y;
+	}
+};
 class Player : public Character
 {
 public:
@@ -13,5 +22,7 @@ public:
 	void Update(float elapsed) override;
 	bool CheckX(int x);
 	bool CheckY(int y);
+	bool CheckLocations(vector<point> locations);
+	void GrabApple(int x, int y);
 };
 

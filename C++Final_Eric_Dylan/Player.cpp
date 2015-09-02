@@ -23,32 +23,38 @@ Player::Player() {
 Player::~Player() {
 }
 
-bool Player::CheckX(int x) {
+bool Player::CheckLocations(vector<point> locations) {
 	Uber& uber = Uber::getInstance();
-	int mapX = (int)x + ox + (x > this->x ? sprite.w - 1: 0);
-	for (int r = 0; r < sprite.h; ++r) {
-		int mapY = (int)y + oy + r;
-
-		unsigned char at = uber.map.at(mapX, mapY).Char.AsciiChar;
-		if (!(at == ' ' || at == 235)) {
-			return false;
+	bool foundApple = false;
+	int appleX, appleY;
+	bool pathClear = true;
+	for (point loc : locations) {
+		unsigned char at = uber.map.at(loc.x, loc.y).Char.AsciiChar;
+		if (at == 235) {
+			foundApple = true;
+			appleX = loc.x;
+			appleY = loc.y;
 		}
+		if (!(at == ' ' || at == 235))
+			pathClear = false;
 	}
-	return true;
+	if (pathClear && foundApple)
+		GrabApple(appleX, appleY);
+	return pathClear;
+}
+
+bool Player::CheckX(int x) {
+	vector<point> locations;
+	for (int r = 0; r < sprite.h; ++r)
+		locations.push_back(point((int)x + ox + (x > this->x ? sprite.w - 1 : 0), (int)y + oy + r));
+	return CheckLocations(locations);
 }
 
 bool Player::CheckY(int y) {
-	Uber& uber = Uber::getInstance();
-	int mapY = (int)y + oy + (y > this->y ? sprite.h - 1 : 0);
-	for (int c = 0; c < sprite.w; ++c) {
-		int mapX = (int)x + ox + c;
-
-		char at = uber.map.at(mapX, mapY).Char.AsciiChar;
-		if (!(at == ' ' || at == 235)) {
-			return false;
-		}
-	}
-	return true;
+	vector<point> locations;
+	for (int c = 0; c < sprite.w; ++c)
+		locations.push_back(point((int)x + ox + c, (int)y + oy + (y > this->y ? sprite.h - 1 : 0)));
+	return CheckLocations(locations);
 }
 
 void Player::Update(float elapsed) {
@@ -66,4 +72,9 @@ void Player::Update(float elapsed) {
 		x += dx / d * moveSpeed * elapsed;
 		y += dy / d * moveSpeed * elapsed;
 	}
+
+}
+
+void Player::GrabApple(int x, int y) {
+
 }
