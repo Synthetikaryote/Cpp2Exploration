@@ -26,7 +26,7 @@ public:
 	Sprite tree;
 
 	bool IsKeyDown(int vk) {
-		return GetAsyncKeyState(vk) & 0x8000;
+		return (GetAsyncKeyState(vk) & 0x8000);
 	}
 
 	void printAt(CHAR_INFO* buffer, int bufferWidth, int bufferHeight, string message, byte color, int x, int y) {
@@ -42,5 +42,4 @@ private:
 
 	Uber(Uber const&) = delete;
 	void operator=(Uber const&) = delete;
-
 };

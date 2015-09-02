@@ -1,5 +1,6 @@
 #include "Map.h"
 #include <iostream>
+#include "Uber.h"
 
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
 
@@ -58,10 +59,10 @@ void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 			}
 			if(!loaded)
 			{
-				newMap.push_back(new Sector(1234, x + X, y + Y));
+				newMap.push_back(new Sector(1, x + X, y + Y));
 			}
         }
-        if( (x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1-y))){
+        if((x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1-y))){
             t = dx;
             dx = -dy;
             dy = t;
@@ -74,4 +75,26 @@ void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 		delete sector;
 	}
 	mSectors = newMap;
+}
+
+CHAR_INFO Map::at(int x, int y) {
+	Uber& uber = Uber::getInstance();
+	int w = uber.sectorWidth;
+	int h = uber.sectorHeight;
+	for (Sector* sector : mSectors) {
+		int sectorX = -viewX / w + sector->mlocX;
+		int sectorY = -viewY / h + sector->mlocY;
+		int macroX = floorf(static_cast<float>(x) / w);
+		int macroY = floorf(static_cast<float>(y) / h);
+		if (macroX == sectorX && macroY == sectorY) {
+			// make sure negative modulus becomes positive
+			// http://stackoverflow.com/questions/13794171/how-to-make-the-mod-of-a-negative-number-to-be-positive
+			int c = ((x % w) + w) % w;
+			int r = ((y % h) + h) % h;
+			return sector->mSprite->data[r * w + c];
+		}
+	}
+	CHAR_INFO blank;
+	blank.Char.AsciiChar = 0;
+	return blank;
 }

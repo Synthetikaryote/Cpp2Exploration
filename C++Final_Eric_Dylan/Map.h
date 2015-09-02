@@ -14,6 +14,7 @@ public:
 	void Update(float elapsed);
 	void Draw(CHAR_INFO* buffer, int bufferHight, int bufferWidth);
 	void Spiral( int X, int Y, int sizeX, int sizeY);
+	CHAR_INFO at(int x, int y);
 
 	vector<Sector*> mSectors;
 };

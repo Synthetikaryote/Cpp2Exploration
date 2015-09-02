@@ -108,8 +108,8 @@ void update(float elapsed) {
 	}
 
 	// update the map
-	uber.map.viewX = -(uber.player.x - screenWidth / 2);
-	uber.map.viewY = -(uber.player.y - screenHeight / 2);
+	uber.map.viewX = -(static_cast<int>(uber.player.x) - screenWidth / 2);
+	uber.map.viewY = -(static_cast<int>(uber.player.y) - screenHeight / 2);
 	uber.map.Update(elapsed);
 
 	calculatedFPS = (int)(1.0f / elapsed);
