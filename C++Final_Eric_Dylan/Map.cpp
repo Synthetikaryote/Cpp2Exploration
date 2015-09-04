@@ -81,12 +81,10 @@ CHAR_INFO Map::at(int x, int y) {
 	Uber& uber = Uber::getInstance();
 	int w = uber.sectorWidth;
 	int h = uber.sectorHeight;
+	int macroX = floorf(static_cast<float>(x) / w) + (x + viewX) / w;
+	int macroY = floorf(static_cast<float>(y) / h) + (y + viewY) / h;
 	for (Sector* sector : mSectors) {
-		int sectorX = -viewX / w + sector->mlocX;
-		int sectorY = -viewY / h + sector->mlocY;
-		int macroX = floorf(static_cast<float>(x) / w);
-		int macroY = floorf(static_cast<float>(y) / h);
-		if (macroX == sectorX && macroY == sectorY) {
+		if (macroX == sector->mlocX && macroY == sector->mlocY) {
 			// make sure negative modulus becomes positive
 			// http://stackoverflow.com/questions/13794171/how-to-make-the-mod-of-a-negative-number-to-be-positive
 			int c = ((x % w) + w) % w;

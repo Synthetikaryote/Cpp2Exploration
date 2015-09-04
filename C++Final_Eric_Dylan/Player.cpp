@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Uber.h"
 #include <iostream>
+#include <cmath>
 
 Player::Player() {
 	sprite.SetSize(3, 4);
@@ -63,16 +64,18 @@ void Player::Update(float elapsed) {
 	Uber& uber = Uber::getInstance();
 	int dx = 0;
 	int dy = 0;
-	if (uber.IsKeyDown(VK_RIGHT)) if (CheckX(x + 1)) dx++;
-	if (uber.IsKeyDown(VK_LEFT)) if (CheckX(x - 1)) dx--;
-	if (uber.IsKeyDown(VK_UP)) if (CheckY(y - 1)) dy--;
-	if (uber.IsKeyDown(VK_DOWN)) if (CheckY(y + 1)) dy++;
+	if (uber.IsKeyDown(VK_RIGHT)) dx++;
+	if (uber.IsKeyDown(VK_LEFT)) dx--;
+	if (uber.IsKeyDown(VK_UP)) dy--;
+	if (uber.IsKeyDown(VK_DOWN)) dy++;
+
 	float d = sqrt(dx * dx + dy * dy);
 	if (d > 0) {
-		x += dx / d * moveSpeed * elapsed;
-		y += dy / d * moveSpeed * elapsed;
+		if (CheckX(x + dx / d * moveSpeed * elapsed))
+			x += dx / d * moveSpeed * elapsed;
+		if (CheckY(y + dy / d * moveSpeed * elapsed))
+			y += dy / d * moveSpeed * elapsed;
 	}
-
 }
 
 void Player::GrabApple(int x, int y) {

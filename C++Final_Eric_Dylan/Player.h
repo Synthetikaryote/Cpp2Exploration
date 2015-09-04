@@ -17,7 +17,7 @@ class Player : public Character
 public:
 	Player();
 	~Player();
-	float moveSpeed = 15.0f;
+	float moveSpeed = 20.0f;
 	int apples = 0;
 	void Update(float elapsed) override;
 	bool CheckX(int x);
