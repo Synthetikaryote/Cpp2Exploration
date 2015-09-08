@@ -91,10 +91,10 @@ void Player::Update(float elapsed) {
 	}
 
 	// hunger
-	uber.player.timeLeftUntillHungry -= elapsed;
-	if (uber.player.timeLeftUntillHungry < 0) {
+	uber.player.timeLeftUntilHungry -= elapsed;
+	if (uber.player.timeLeftUntilHungry < 0) {
 		mFullness -= 1;
-		timeLeftUntillHungry += secondsPerHunger;
+		timeLeftUntilHungry += secondsPerHunger;
 	}
 }
 
@@ -107,5 +107,5 @@ void Player::GrabApple(int x, int y) {
 	shared_ptr<Sector> sector = uber.map.findSectorAt(x, y);
 	uber.map.applesCollected.push_back(sector.get()->mSeed);
 	uber.player.mFullness = min(maxFullness, mFullness + fullnessPerApple);
-	uber.player.timeLeftUntillHungry = secondsPerHunger;
+	uber.player.timeLeftUntilHungry = secondsPerHunger;
 }

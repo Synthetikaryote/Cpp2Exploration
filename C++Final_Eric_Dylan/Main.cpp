@@ -135,7 +135,7 @@ void draw(CHAR_INFO* buffer) {
 	message2 << "Fullness: [";
 	for (int i = 0; i < uber.player.mFullness; ++i)
 		message2 << "|";
-	for (int i = 0; i < uber.player.maxFullness - uber.player.mFullness; ++i)
+	for (int i = 0; i < max(0, uber.player.maxFullness - uber.player.mFullness); ++i)
 		message2 << " ";
 	message2 << "]";
 	uber.printAt(buffer, screenWidth, screenHeight, message2.str(), 0x0F, 25, 1);
