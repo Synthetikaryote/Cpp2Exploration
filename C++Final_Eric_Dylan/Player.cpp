@@ -6,7 +6,6 @@
 Player::Player() {
 	sprite.SetSize(3, 4);
 
-	// some kinda robot
 	sprite.SetData(
 		" \1 "
 		"/V\\"
