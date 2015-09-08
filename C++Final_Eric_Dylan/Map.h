@@ -2,7 +2,9 @@
 
 #include <vector>
 #include <Windows.h>
+#include <memory>
 #include "Sector.h"
+
 
 class Map
 {
@@ -16,7 +18,9 @@ public:
 	void Spiral( int X, int Y, int sizeX, int sizeY);
 	CHAR_INFO at(int x, int y);
 
-	vector<Sector*> mSectors;
+	vector<shared_ptr<Sector>> mSectors;
+
+	vector<int> applesCollected;
 };
 
 
