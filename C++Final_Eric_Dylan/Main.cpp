@@ -124,6 +124,7 @@ void draw(CHAR_INFO* buffer) {
 
 	// show FPS
 	stringstream message;
-	message << "FPS: " << calculatedFPS << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
+	//message << "FPS: " << calculatedFPS << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
+	message << "Fullness: " << uber.player.mFullness;
 	uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 1);
 }

@@ -8,6 +8,7 @@ Sector::Sector(unsigned int seed, int locX, int locY, bool spawnApple)
 {
 	mlocX = locX;
 	mlocY = locY;
+	mSeed = seed;
 	thread t(&Sector::Generate, this, seed, spawnApple);
 	t.join();
 }
