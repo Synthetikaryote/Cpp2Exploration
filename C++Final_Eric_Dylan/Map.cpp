@@ -2,6 +2,8 @@
 #include <iostream>
 #include "Uber.h"
 #include <memory>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -36,6 +38,20 @@ void Map::Draw(CHAR_INFO* buffer, int bufferWidth, int bufferHight) {
 	}
 }
 
+static const size_t InitialFNV = 2166136261U;
+static const size_t FNVMultiple = 16777619;
+/* Fowler / Noll / Vo (FNV) Hash */
+size_t myhash(const string &s)
+{
+    size_t hash = InitialFNV;
+    for(size_t i = 0; i < s.length(); i++)
+    {
+        hash = hash ^ (s[i]);       /* xor  the low 8 bits */
+        hash = hash * FNVMultiple;  /* multiply by the magic number */
+    }
+    return hash;
+}
+
 void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 	bool loaded = false;
 	vector<shared_ptr<Sector>> newMap;
@@ -61,7 +77,24 @@ void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 
 			if(!loaded)
 			{
-				shared_ptr<Sector> newSector(new Sector (1, x+X, y+Y));
+				string seedKey;
+				stringstream strs;
+				strs << 1 << x+X << y+Y;
+				seedKey = strs.str();
+				unsigned int seed = myhash(seedKey);
+				bool spawnApple = true;
+				
+				for(auto apple : applesCollected)
+				{
+					if(apple == seed)
+					{
+						spawnApple = false;
+						break;
+					}
+				}
+
+				shared_ptr<Sector> newSector(new Sector (seed, x+X, y+Y, spawnApple));
+
 				newMap.push_back(newSector);
 			}
         }
@@ -86,7 +119,7 @@ CHAR_INFO Map::at(int x, int y) {
 	int h = uber.sectorHeight;
 	int sectorX, sectorY;
 	worldXYToSectorXY(x, y, sectorX, sectorY);
-	for (Sector* sector : mSectors) {
+	for (auto sector : mSectors) {
 		if (sectorX == sector->mlocX && sectorY == sector->mlocY) {
 			// make sure negative modulus becomes positive
 			// http://stackoverflow.com/questions/13794171/how-to-make-the-mod-of-a-negative-number-to-be-positive

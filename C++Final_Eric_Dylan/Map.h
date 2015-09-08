@@ -21,7 +21,7 @@ public:
 
 	vector<shared_ptr<Sector>> mSectors;
 
-	vector<int> applesCollected;
+	vector<unsigned int> applesCollected;
 };
 
 
