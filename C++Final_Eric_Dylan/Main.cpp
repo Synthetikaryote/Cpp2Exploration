@@ -110,14 +110,6 @@ void update(float elapsed) {
 		character->Update(elapsed);
 	}
 
-	uber.player.timeLeftUntillHungry -= elapsed;
-
-	if(uber.player.timeLeftUntillHungry < 0)
-	{
-		uber.player.mFullness -= 1;
-		uber.player.timeLeftUntillHungry += 5;
-	}
-
 	// update the map
 	uber.map.viewX = -(static_cast<int>(uber.player.x) - screenWidth / 2);
 	uber.map.viewY = -(static_cast<int>(uber.player.y) - screenHeight / 2);
