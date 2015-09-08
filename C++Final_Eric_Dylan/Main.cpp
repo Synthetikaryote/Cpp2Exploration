@@ -110,6 +110,17 @@ void update(float elapsed) {
 		character->Update(elapsed);
 	}
 
+	if(uber.player.mFullness <= 0)
+	{
+		//reset game
+		uber.player.mFullness = 20;
+		uber.map.mSectors.clear();
+		uber.map.applesCollected.clear();
+		uber.player.x = 32;
+		uber.player.y = 32;
+		uber.baseSeed = time(NULL);
+	}
+
 	// update the map
 	uber.map.viewX = -(static_cast<int>(uber.player.x) - screenWidth / 2);
 	uber.map.viewY = -(static_cast<int>(uber.player.y) - screenHeight / 2);
