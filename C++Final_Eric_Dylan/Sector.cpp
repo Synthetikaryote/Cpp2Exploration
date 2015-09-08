@@ -8,8 +8,6 @@ Sector::Sector(unsigned int seed, int locX, int locY, bool spawnApple)
 {
 	mlocX = locX;
 	mlocY = locY;
-	mSprite->x = mlocX * 64;
-	mSprite->y = mlocY * 64;
 	thread t(&Sector::Generate, this, seed, spawnApple);
 	t.join();
 }
@@ -61,6 +59,8 @@ void Sector::Generate(unsigned int seed, bool spawnApple)
 			}
 		}
 	}
+	mSprite->x = mlocX * 64;
+	mSprite->y = mlocY * 64;
 	built = true;
 }
 
