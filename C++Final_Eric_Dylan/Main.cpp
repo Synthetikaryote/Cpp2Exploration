@@ -4,6 +4,7 @@
 #include "Uber.h"
 #include "Sector.h"
 #include <sstream>
+#include <time.h>
 
 using namespace std;
 using namespace std::chrono;
@@ -58,6 +59,8 @@ int main() {
 
 	initGame();
 
+	uber.baseSeed = time(NULL);
+
 	while (1) {
 		float t = time();
 
@@ -107,6 +110,14 @@ void update(float elapsed) {
 		character->Update(elapsed);
 	}
 
+	uber.player.timeLeftUntillHungry -= elapsed;
+
+	if(uber.player.timeLeftUntillHungry < 0)
+	{
+		uber.player.mFullness -= 1;
+		uber.player.timeLeftUntillHungry += 5;
+	}
+
 	// update the map
 	uber.map.viewX = -(static_cast<int>(uber.player.x) - screenWidth / 2);
 	uber.map.viewY = -(static_cast<int>(uber.player.y) - screenHeight / 2);
@@ -125,6 +136,10 @@ void draw(CHAR_INFO* buffer) {
 	// show FPS
 	stringstream message;
 	//message << "FPS: " << calculatedFPS << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
-	message << "Fullness: " << uber.player.mFullness;
-	uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 1);
+	message << "Apples collected: " << uber.map.applesCollected.size();
+	uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 0);
+
+	stringstream message2;
+	message2 << "Fullness: " << uber.player.mFullness;
+	uber.printAt(buffer, screenWidth, screenHeight, message2.str(), 0x0F, 25, 0);
 }
