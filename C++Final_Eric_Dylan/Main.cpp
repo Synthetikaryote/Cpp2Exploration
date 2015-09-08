@@ -116,6 +116,7 @@ void update(float elapsed) {
 		{
 			//reset game
 			uber.player.mFullness = 20;
+			uber.player.timeLeftUntilHungry = uber.player.secondsPerHunger;
 			uber.map.mSectors.clear();
 			uber.map.applesCollected.clear();
 			uber.player.x = 32;
