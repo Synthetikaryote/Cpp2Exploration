@@ -99,5 +99,5 @@ void Player::GrabApple(int x, int y) {
 		(*ci).Char.AsciiChar = ' ';
 	}
 	shared_ptr<Sector> sector = uber.map.findSectorAt(x, y);
-	uber.map.applesCollected.push_back(sector.mSeed);
+	uber.map.applesCollected.push_back(sector.get()->mSeed);
 }
