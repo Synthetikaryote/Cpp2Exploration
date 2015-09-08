@@ -4,9 +4,11 @@
 #include <string>
 #include <thread>
 
-Sector::Sector(int seed, int locX, int locY)
+Sector::Sector(unsigned int seed, int locX, int locY, bool spawnApple)
 {
-	thread t(&Sector::Generate, this, seed, locX, locY);
+	mlocX = locX;
+	mlocY = locY;
+	thread t(&Sector::Generate, this, seed, spawnApple);
 	t.join();
 }
 
@@ -16,33 +18,9 @@ Sector::~Sector()
 	delete mSprite;
 }
 
-static const size_t InitialFNV = 2166136261U;
-static const size_t FNVMultiple = 16777619;
-/* Fowler / Noll / Vo (FNV) Hash */
-size_t myhash(const string &s)
+void Sector::Generate(unsigned int seed, bool spawnApple)
 {
-    size_t hash = InitialFNV;
-    for(size_t i = 0; i < s.length(); i++)
-    {
-        hash = hash ^ (s[i]);       /* xor  the low 8 bits */
-        hash = hash * FNVMultiple;  /* multiply by the magic number */
-    }
-    return hash;
-}
-
-void Sector::Generate(int seed, int locX, int locY)
-{
-	bool appleSpawned = false;
-	string seedKey;
-	stringstream strs;
-	strs << seed << locX << locY;
-	seedKey = strs.str();
-
-
-
-	srand(myhash(seedKey));
-
-
+	srand(seed);
 
 	Uber &uber = Uber::getInstance();
 	mSprite = new Sprite(uber.sectorWidth, uber.sectorHeight);
@@ -64,15 +42,15 @@ void Sector::Generate(int seed, int locX, int locY)
 			else if(spawn < 1)
 			{
 				//apples
-				if(appleSpawned)
-				{
-					mSprite->data[j * uber.sectorWidth + i].Char.AsciiChar = ' ';
-				}
-				else
+				if(spawnApple)
 				{
 					mSprite->data[j * uber.sectorWidth + i].Attributes = 0x2C;
 					mSprite->data[j * uber.sectorWidth + i].Char.AsciiChar = 235;
-					appleSpawned = true;
+					spawnApple = false;
+				}
+				else
+				{
+					mSprite->data[j * uber.sectorWidth + i].Char.AsciiChar = ' ';
 				}
 			}
 			else
@@ -81,10 +59,8 @@ void Sector::Generate(int seed, int locX, int locY)
 			}
 		}
 	}
-	mlocX = locX;
-	mlocY = locY;
-	mSprite->x = locX * 64;
-	mSprite->y = locY * 64;
+	mSprite->x = mlocX * 64;
+	mSprite->y = mlocY * 64;
 	built = true;
 }
 
