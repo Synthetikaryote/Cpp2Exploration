@@ -29,7 +29,7 @@ public:
 	float maxFullness = 20.f;
 	float mFullness = maxFullness;
 	float timeLeftUntilHungry = secondsPerHunger;
-	float secondsPerHunger = 0.5f;
+	float secondsPerHunger = 1.0f;
 	float fullnessPerApple = 5.0f;
 };
 
