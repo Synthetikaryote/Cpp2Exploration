@@ -16,12 +16,11 @@ public:
 	void Update(float elapsed);
 	void Draw(CHAR_INFO* buffer, int bufferHight, int bufferWidth);
 	void Spiral( int X, int Y, int sizeX, int sizeY);
-	CHAR_INFO at(int x, int y);
-	void worldXYToSectorXY(int x, int y, int& sectorX, int& sectorY);
-
+	CHAR_INFO* at(int x, int y);
+	shared_ptr<Sector> findSectorAt(int x, int y);
 	vector<shared_ptr<Sector>> mSectors;
 
-	vector<int> applesCollected;
+	vector<unsigned int> applesCollected;
 };
 
 

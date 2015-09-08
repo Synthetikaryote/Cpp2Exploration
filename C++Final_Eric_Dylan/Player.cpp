@@ -30,14 +30,18 @@ bool Player::CheckLocations(vector<point> locations) {
 	int appleX, appleY;
 	bool pathClear = true;
 	for (point loc : locations) {
-		unsigned char at = uber.map.at(loc.x, loc.y).Char.AsciiChar;
-		if (at == 235) {
-			foundApple = true;
-			appleX = loc.x;
-			appleY = loc.y;
+		CHAR_INFO* ci;
+		ci = uber.map.at(loc.x, loc.y);
+		if (ci != nullptr) {
+			unsigned char at = (*ci).Char.AsciiChar;
+			if (at == 235) {
+				foundApple = true;
+				appleX = loc.x;
+				appleY = loc.y;
+			}
+			if (!(at == ' ' || at == 235))
+				pathClear = false;
 		}
-		if (!(at == ' ' || at == 235))
-			pathClear = false;
 	}
 	if (pathClear && foundApple)
 		GrabApple(appleX, appleY);
@@ -89,5 +93,11 @@ void Player::Update(float elapsed) {
 }
 
 void Player::GrabApple(int x, int y) {
-
+	Uber& uber = Uber::getInstance();
+	CHAR_INFO* ci = uber.map.at(x, y);
+	if (ci != nullptr) {
+		(*ci).Char.AsciiChar = ' ';
+	}
+	shared_ptr<Sector> sector = uber.map.findSectorAt(x, y);
+	uber.map.applesCollected.push_back(sector.mSeed);
 }

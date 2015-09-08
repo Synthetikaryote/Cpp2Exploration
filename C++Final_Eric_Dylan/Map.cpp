@@ -80,30 +80,29 @@ void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 	mSectors = newMap;
 }
 
-CHAR_INFO Map::at(int x, int y) {
-	Uber& uber = Uber::getInstance();
-	int w = uber.sectorWidth;
-	int h = uber.sectorHeight;
-	int sectorX, sectorY;
-	worldXYToSectorXY(x, y, sectorX, sectorY);
-	for (Sector* sector : mSectors) {
-		if (sectorX == sector->mlocX && sectorY == sector->mlocY) {
-			// make sure negative modulus becomes positive
-			// http://stackoverflow.com/questions/13794171/how-to-make-the-mod-of-a-negative-number-to-be-positive
-			int c = ((x % w) + w) % w;
-			int r = ((y % h) + h) % h;
-			return sector->mSprite->data[r * w + c];
-		}
+CHAR_INFO* Map::at(int x, int y) {
+	shared_ptr<Sector> sector = findSectorAt(x, y);
+	if (sector != nullptr) {
+		Uber& uber = Uber::getInstance();
+		int w = uber.sectorWidth;
+		int h = uber.sectorHeight;
+		// make sure negative modulus becomes positive
+		// http://stackoverflow.com/questions/13794171/how-to-make-the-mod-of-a-negative-number-to-be-positive
+		int c = ((x % w) + w) % w;
+		int r = ((y % h) + h) % h;
+		return &sector->mSprite->data[r * w + c];
 	}
-	CHAR_INFO blank;
-	blank.Char.AsciiChar = 0;
-	return blank;
+	return nullptr;
 }
 
-void Map::worldXYToSectorXY(int x, int y, int& sectorX, int& sectorY) {
+shared_ptr<Sector> Map::findSectorAt(int x, int y) {
 	Uber& uber = Uber::getInstance();
 	int w = uber.sectorWidth;
 	int h = uber.sectorHeight;
-	sectorX = floorf(static_cast<float>(x) / w) + (x + viewX) / w;
-	sectorY = floorf(static_cast<float>(y) / h) + (y + viewY) / h;
+	int sectorX = floorf(static_cast<float>(x) / w) + (x + viewX) / w;
+	int sectorY = floorf(static_cast<float>(y) / h) + (y + viewY) / h;
+	for (auto sector : mSectors)
+		if (sectorX == sector->mlocX && sectorY == sector->mlocY)
+			return sector;
+	return nullptr;
 }
