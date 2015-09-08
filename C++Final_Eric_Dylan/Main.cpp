@@ -60,7 +60,7 @@ int main() {
 
 	initGame();
 
-	uber.baseSeed = time(NULL);
+	uber.baseSeed = static_cast<int>(time(NULL));
 
 	while (1) {
 		float t = time();
@@ -89,8 +89,8 @@ void initGame() {
 
 	uber.player.x = screenWidth / 2;
 	uber.player.y = screenHeight / 2;
-	uber.player.sprite.x = uber.player.x + uber.player.ox;
-	uber.player.sprite.y = uber.player.y + uber.player.oy;
+	uber.player.sprite.x = static_cast<int>(uber.player.x + uber.player.ox);
+	uber.player.sprite.y = static_cast<int>(uber.player.y + uber.player.oy);
 
 	uber.tree.SetSize(3,4);
 	uber.tree.SetData(
@@ -121,7 +121,7 @@ void update(float elapsed) {
 			uber.map.applesCollected.clear();
 			uber.player.x = 32;
 			uber.player.y = 32;
-			uber.baseSeed = time(NULL);
+			uber.baseSeed = static_cast<int>(time(NULL));
 			inGame = false;
 
 			for (int i = 0; i < screenHeight * screenWidth; ++i) {

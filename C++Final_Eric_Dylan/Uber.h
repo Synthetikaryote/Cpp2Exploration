@@ -28,11 +28,11 @@ public:
 	int baseSeed = 1;
 
 	bool IsKeyDown(int vk) {
-		return (GetAsyncKeyState(vk) & 0x8000);
+		return ((GetAsyncKeyState(vk) & 0x8000) != 0);
 	}
 
 	void printAt(CHAR_INFO* buffer, int bufferWidth, int bufferHeight, string message, byte color, int x, int y) {
-		for (unsigned int i = 0; i < message.length(); ++i) {
+		for (int i = 0; i < static_cast<int>(message.length()); ++i) {
 			if (x + i < bufferWidth && y < bufferHeight) {
 				buffer[y * bufferWidth + x + i].Attributes = color;
 				buffer[y * bufferWidth + x + i].Char.AsciiChar = message[i];
