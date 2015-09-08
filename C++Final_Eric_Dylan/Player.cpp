@@ -99,4 +99,6 @@ void Player::GrabApple(int x, int y) {
 	}
 	shared_ptr<Sector> sector = uber.map.findSectorAt(x, y);
 	uber.map.applesCollected.push_back(sector.get()->mSeed);
+	uber.player.mFullness = min(20, uber.player.mFullness + 5);
+	uber.player.timeLeftUntillHungry = 5;
 }

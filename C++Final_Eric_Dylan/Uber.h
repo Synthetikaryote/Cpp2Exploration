@@ -25,6 +25,8 @@ public:
 	vector<Character*> characters;
 	Sprite tree;
 
+	int baseSeed = 1;
+
 	bool IsKeyDown(int vk) {
 		return (GetAsyncKeyState(vk) & 0x8000);
 	}

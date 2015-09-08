@@ -26,6 +26,7 @@ public:
 	bool CheckLocations(vector<point> locations);
 	void GrabApple(int x, int y);
 
-	int mFullness = 100;
+	float mFullness = 20;
+	float timeLeftUntillHungry = 5;
 };
 

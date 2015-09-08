@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 Map::Map()
 {
 }
@@ -14,9 +15,6 @@ Map::Map()
 
 Map::~Map()
 {
-	//for (auto sector : mSectors) {
-	//	delete sector;
-	//}
 	mSectors.clear();
 }
 
@@ -53,6 +51,7 @@ size_t myhash(const string &s)
 }
 
 void Map::Spiral( int X, int Y, int sizeX, int sizeY){
+	Uber &uber = Uber::getInstance();
 	bool loaded = false;
 	vector<shared_ptr<Sector>> newMap;
     int x,y,dx,dy;
@@ -79,7 +78,7 @@ void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 			{
 				string seedKey;
 				stringstream strs;
-				strs << 1 << x+X << y+Y;
+				strs << uber.baseSeed << x+X << y+Y;
 				seedKey = strs.str();
 				unsigned int seed = myhash(seedKey);
 				bool spawnApple = true;
