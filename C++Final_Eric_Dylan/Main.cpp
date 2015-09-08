@@ -129,9 +129,14 @@ void draw(CHAR_INFO* buffer) {
 	stringstream message;
 	//message << "FPS: " << calculatedFPS << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
 	message << "Apples collected: " << uber.map.applesCollected.size();
-	uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 0);
+	uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 1);
 
 	stringstream message2;
-	message2 << "Fullness: " << uber.player.mFullness;
-	uber.printAt(buffer, screenWidth, screenHeight, message2.str(), 0x0F, 25, 0);
+	message2 << "Fullness: [";
+	for (int i = 0; i < uber.player.mFullness; ++i)
+		message2 << "|";
+	for (int i = 0; i < uber.player.maxFullness - uber.player.mFullness; ++i)
+		message2 << " ";
+	message2 << "]";
+	uber.printAt(buffer, screenWidth, screenHeight, message2.str(), 0x0F, 25, 1);
 }
