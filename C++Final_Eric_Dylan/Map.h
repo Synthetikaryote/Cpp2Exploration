@@ -15,6 +15,7 @@ public:
 	void Draw(CHAR_INFO* buffer, int bufferHight, int bufferWidth);
 	void Spiral( int X, int Y, int sizeX, int sizeY);
 	CHAR_INFO at(int x, int y);
+	void worldXYToSectorXY(int x, int y, int& sectorX, int& sectorY);
 
 	vector<Sector*> mSectors;
 };

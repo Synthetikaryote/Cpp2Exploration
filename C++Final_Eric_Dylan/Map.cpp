@@ -81,10 +81,10 @@ CHAR_INFO Map::at(int x, int y) {
 	Uber& uber = Uber::getInstance();
 	int w = uber.sectorWidth;
 	int h = uber.sectorHeight;
-	int macroX = floorf(static_cast<float>(x) / w) + (x + viewX) / w;
-	int macroY = floorf(static_cast<float>(y) / h) + (y + viewY) / h;
+	int sectorX, sectorY;
+	worldXYToSectorXY(x, y, sectorX, sectorY);
 	for (Sector* sector : mSectors) {
-		if (macroX == sector->mlocX && macroY == sector->mlocY) {
+		if (sectorX == sector->mlocX && sectorY == sector->mlocY) {
 			// make sure negative modulus becomes positive
 			// http://stackoverflow.com/questions/13794171/how-to-make-the-mod-of-a-negative-number-to-be-positive
 			int c = ((x % w) + w) % w;
@@ -95,4 +95,12 @@ CHAR_INFO Map::at(int x, int y) {
 	CHAR_INFO blank;
 	blank.Char.AsciiChar = 0;
 	return blank;
+}
+
+void Map::worldXYToSectorXY(int x, int y, int& sectorX, int& sectorY) {
+	Uber& uber = Uber::getInstance();
+	int w = uber.sectorWidth;
+	int h = uber.sectorHeight;
+	sectorX = floorf(static_cast<float>(x) / w) + (x + viewX) / w;
+	sectorY = floorf(static_cast<float>(y) / h) + (y + viewY) / h;
 }

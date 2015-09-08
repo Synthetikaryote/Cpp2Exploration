@@ -75,6 +75,16 @@ void Player::Update(float elapsed) {
 			x += dx / d * moveSpeed * elapsed;
 		if (CheckY(y + dy / d * moveSpeed * elapsed))
 			y += dy / d * moveSpeed * elapsed;
+
+		// align diagonal movement to perfect diagonals only
+		//if (dx && dy) {
+		//	float intPartX, intPartY;
+		//	float fracPartX = modf(x, &intPartX);
+		//	float fracPartY = modf(y, &intPartY);
+		//	float lowestFractionalPart = min(fracPartX, fracPartY);
+		//	x = intPartX + lowestFractionalPart;
+		//	y = intPartY + lowestFractionalPart;
+		//}
 	}
 }
 
