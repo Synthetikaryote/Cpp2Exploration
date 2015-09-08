@@ -30,7 +30,7 @@ public:
 	}
 
 	void printAt(CHAR_INFO* buffer, int bufferWidth, int bufferHeight, string message, byte color, int x, int y) {
-		for (int i = 0; i < message.length(); ++i) {
+		for (unsigned int i = 0; i < message.length(); ++i) {
 			if (x + i < bufferWidth && y < bufferHeight) {
 				buffer[y * bufferWidth + x + i].Attributes = color;
 				buffer[y * bufferWidth + x + i].Char.AsciiChar = message[i];

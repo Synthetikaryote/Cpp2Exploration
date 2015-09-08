@@ -12,6 +12,7 @@ struct point {
 		this->y = y;
 	}
 };
+
 class Player : public Character
 {
 public:

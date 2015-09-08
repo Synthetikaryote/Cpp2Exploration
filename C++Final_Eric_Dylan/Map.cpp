@@ -1,8 +1,9 @@
 #include "Map.h"
 #include <iostream>
 #include "Uber.h"
+#include <memory>
 
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
+using namespace std;
 
 Map::Map()
 {
@@ -11,9 +12,9 @@ Map::Map()
 
 Map::~Map()
 {
-	for (Sector* sector : mSectors) {
-		delete sector;
-	}
+	//for (auto sector : mSectors) {
+	//	delete sector;
+	//}
 	mSectors.clear();
 }
 
@@ -23,21 +24,21 @@ void Map::Update(float elapsed) {
 
 	Spiral( sectorX, sectorY, 3, 3);
 	
-	for (Sector* sector : mSectors) {
+	for (auto sector : mSectors) {
 		sector->mSprite->x = viewX + (sector->mlocX * sector->mSprite->w);
 		sector->mSprite->y = viewY + (sector->mlocY * sector->mSprite->h);
 	}
 }
 
 void Map::Draw(CHAR_INFO* buffer, int bufferWidth, int bufferHight) {	
-	for (Sector* sector : mSectors) {
+	for (auto sector : mSectors) {
 		sector->mSprite->Draw(buffer, bufferWidth, bufferHight);
 	}
 }
 
 void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 	bool loaded = false;
-	vector<Sector*> newMap;
+	vector<shared_ptr<Sector>> newMap;
     int x,y,dx,dy;
     x = y = dx =0;
     dy = -1;
@@ -51,15 +52,17 @@ void Map::Spiral( int X, int Y, int sizeX, int sizeY){
 				if(mSectors[i]->mlocX == x + X && mSectors[i]->mlocY == y+Y)
 				{
 					newMap.push_back(mSectors[i]);
-					std::vector<Sector*>::iterator it = mSectors.begin() + i;
+					std::vector<shared_ptr<Sector>>::iterator it = mSectors.begin() + i;
 					mSectors.erase(it);
 					loaded = true;
 					break;
 				}
 			}
+
 			if(!loaded)
 			{
-				newMap.push_back(new Sector(1, x + X, y + Y));
+				shared_ptr<Sector> newSector(new Sector (1, x+X, y+Y));
+				newMap.push_back(newSector);
 			}
         }
         if((x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1-y))){
@@ -70,9 +73,9 @@ void Map::Spiral( int X, int Y, int sizeX, int sizeY){
         x += dx;
         y += dy;
     }
-	for(Sector* sector : mSectors)
+	for(unsigned int i = 0; i < mSectors.size(); ++i)
 	{
-		delete sector;
+		mSectors.pop_back();
 	}
 	mSectors = newMap;
 }

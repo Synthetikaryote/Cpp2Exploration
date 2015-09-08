@@ -2,7 +2,9 @@
 
 #include <vector>
 #include <Windows.h>
+#include <memory>
 #include "Sector.h"
+
 
 class Map
 {
@@ -17,7 +19,9 @@ public:
 	CHAR_INFO at(int x, int y);
 	void worldXYToSectorXY(int x, int y, int& sectorX, int& sectorY);
 
-	vector<Sector*> mSectors;
+	vector<shared_ptr<Sector>> mSectors;
+
+	vector<int> applesCollected;
 };
 
 
