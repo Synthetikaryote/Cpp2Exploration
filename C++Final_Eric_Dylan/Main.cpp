@@ -13,13 +13,15 @@ float targetFramesPerSecond = 80.0f;
 float spf = 1.0f / targetFramesPerSecond;
 const int screenWidth = 64;
 const int screenHeight = 64;
+CHAR_INFO buffer[screenHeight * screenWidth];
 
 int calculatedFPS = 0;
 
 Uber &uber = Uber::getInstance();
 void initGame();
 void update(float elapsed);
-void draw(CHAR_INFO* buffer);
+void draw();
+bool inGame = true;
 
 high_resolution_clock::time_point timeStart = high_resolution_clock::now();
 float time() {
@@ -50,7 +52,6 @@ int main() {
 		SetCurrentConsoleFontEx(hOutput, false, &info);
 	}
 
-	CHAR_INFO buffer[screenHeight * screenWidth];
 	COORD dwBufferSize = { screenWidth, screenHeight };
 	COORD dwBufferCoord = { 0, 0 };
 	SMALL_RECT rcRegion = { 0, 0, screenWidth - 1, screenHeight - 1 };
@@ -75,7 +76,7 @@ int main() {
 
 			update(elapsed);
 
-			draw(buffer);
+			draw();
 
 			WriteConsoleOutput(hOutput, (CHAR_INFO*)buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 		}
@@ -105,49 +106,73 @@ void initGame() {
 }
 
 void update(float elapsed) {
-	// update the characters
-	for (Character* character : uber.characters) {
-		character->Update(elapsed);
-	}
+	if (inGame) {
+		// update the characters
+		for (Character* character : uber.characters) {
+			character->Update(elapsed);
+		}
 
-	if(uber.player.mFullness <= 0)
-	{
-		//reset game
-		uber.player.mFullness = 20;
-		uber.map.mSectors.clear();
-		uber.map.applesCollected.clear();
-		uber.player.x = 32;
-		uber.player.y = 32;
-		uber.baseSeed = time(NULL);
-	}
+		if (uber.player.mFullness <= 0)
+		{
+			//reset game
+			uber.player.mFullness = 20;
+			uber.map.mSectors.clear();
+			uber.map.applesCollected.clear();
+			uber.player.x = 32;
+			uber.player.y = 32;
+			uber.baseSeed = time(NULL);
+			inGame = false;
 
-	// update the map
-	uber.map.viewX = -(static_cast<int>(uber.player.x) - screenWidth / 2);
-	uber.map.viewY = -(static_cast<int>(uber.player.y) - screenHeight / 2);
-	uber.map.Update(elapsed);
+			for (int i = 0; i < screenHeight * screenWidth; ++i) {
+				CHAR_INFO ci;
+				ci.Char.AsciiChar = ' ';
+				ci.Attributes = 0x00;
+				buffer[i] = ci;
+			}
+		}
+
+		// update the map
+		uber.map.viewX = -(static_cast<int>(uber.player.x) - screenWidth / 2);
+		uber.map.viewY = -(static_cast<int>(uber.player.y) - screenHeight / 2);
+		uber.map.Update(elapsed);
+	}
+	else {
+		if (uber.IsKeyDown(VK_RETURN)) {
+			inGame = true;
+		}
+	}
 
 	calculatedFPS = (int)(1.0f / elapsed);
 }
 
-void draw(CHAR_INFO* buffer) {
-	uber.map.Draw(buffer, screenWidth, screenHeight);
-	// draw everything
-	for (Character* character : uber.characters) {
-		character->Draw(buffer, screenWidth, screenHeight);
+void draw() {
+	if (inGame) {
+		uber.map.Draw(buffer, screenWidth, screenHeight);
+		// draw everything
+		for (Character* character : uber.characters) {
+			character->Draw(buffer, screenWidth, screenHeight);
+		}
+
+		// show FPS
+		stringstream message;
+		//message << "FPS: " << calculatedFPS << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
+		message << "Apples collected: " << uber.map.applesCollected.size();
+		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 1);
+
+		stringstream message2;
+		message2 << "Fullness: [";
+		for (int i = 0; i < uber.player.mFullness; ++i)
+			message2 << "|";
+		for (int i = 0; i < max(0, uber.player.maxFullness - uber.player.mFullness); ++i)
+			message2 << " ";
+		message2 << "]";
+		uber.printAt(buffer, screenWidth, screenHeight, message2.str(), 0x0F, 25, 1);
 	}
-
-	// show FPS
-	stringstream message;
-	//message << "FPS: " << calculatedFPS << "  Player at (" << uber.player.x << ", " << uber.player.y << ")";
-	message << "Apples collected: " << uber.map.applesCollected.size();
-	uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 1);
-
-	stringstream message2;
-	message2 << "Fullness: [";
-	for (int i = 0; i < uber.player.mFullness; ++i)
-		message2 << "|";
-	for (int i = 0; i < max(0, uber.player.maxFullness - uber.player.mFullness); ++i)
-		message2 << " ";
-	message2 << "]";
-	uber.printAt(buffer, screenWidth, screenHeight, message2.str(), 0x0F, 25, 1);
+	else {
+		stringstream message;
+		message << "GAME OVER";
+		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 27, 30);
+		message.str("Press enter to restart");
+		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 21, 34);
+	}
 }
