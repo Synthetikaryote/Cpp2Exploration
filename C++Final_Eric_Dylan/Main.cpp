@@ -22,6 +22,7 @@ void initGame();
 void update(float elapsed);
 void draw();
 bool inGame = true;
+int lastApplesCollected = 0;
 
 high_resolution_clock::time_point timeStart = high_resolution_clock::now();
 float time() {
@@ -118,6 +119,7 @@ void update(float elapsed) {
 			uber.player.mFullness = 20;
 			uber.player.timeLeftUntilHungry = uber.player.secondsPerHunger;
 			uber.map.mSectors.clear();
+			lastApplesCollected = uber.map.applesCollected.size();
 			uber.map.applesCollected.clear();
 			uber.player.x = 32;
 			uber.player.y = 32;
@@ -160,7 +162,8 @@ void draw() {
 		message << "Apples collected: " << uber.map.applesCollected.size();
 		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 1);
 
-		message.str("Fullness: [");
+		message.str("");
+		message << "Fullness: [";
 		for (int i = 0; i < uber.player.mFullness; ++i)
 			message << "|";
 		for (int i = 0; i < max(0, uber.player.maxFullness - uber.player.mFullness); ++i)
@@ -174,8 +177,11 @@ void draw() {
 	else {
 		stringstream message;
 		message << "GAME OVER";
-		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 27, 30);
+		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 27, 28);
+		message.str("");
+		message << "You collected " << lastApplesCollected << " apple" << (lastApplesCollected != 1 ? "s" : "") << (lastApplesCollected > 3 ? "! Congratulations!" : "");
+		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 32 - message.str().size() / 2, 32);
 		message.str("Press enter to restart");
-		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 21, 34);
+		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 21, 36);
 	}
 }
