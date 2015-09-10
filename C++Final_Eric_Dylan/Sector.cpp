@@ -46,7 +46,7 @@ void Sector::Generate(unsigned int seed, bool spawnApple)
 				if(spawnApple)
 				{
 					mSprite->data[j * uber.sectorWidth + i].Attributes = 0x2C;
-					mSprite->data[j * uber.sectorWidth + i].Char.AsciiChar = 235;
+					mSprite->data[j * uber.sectorWidth + i].Char.AsciiChar = static_cast<unsigned char>(235);
 					spawnApple = false;
 				}
 				else

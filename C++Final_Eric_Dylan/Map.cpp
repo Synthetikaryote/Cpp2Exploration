@@ -131,8 +131,8 @@ shared_ptr<Sector> Map::findSectorAt(int x, int y) {
 	Uber& uber = Uber::getInstance();
 	int w = uber.sectorWidth;
 	int h = uber.sectorHeight;
-	int sectorX = floorf(static_cast<float>(x) / w) + (x + viewX) / w;
-	int sectorY = floorf(static_cast<float>(y) / h) + (y + viewY) / h;
+	int sectorX = static_cast<int>(floorf(static_cast<float>(x) / w) + (x + viewX) / w);
+	int sectorY = static_cast<int>(floorf(static_cast<float>(y) / h) + (y + viewY) / h);
 	for (auto sector : mSectors)
 		if (sectorX == sector->mlocX && sectorY == sector->mlocY)
 			return sector;
