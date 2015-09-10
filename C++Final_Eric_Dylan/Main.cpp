@@ -160,14 +160,16 @@ void draw() {
 		message << "Apples collected: " << uber.map.applesCollected.size();
 		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 1, 1);
 
-		stringstream message2;
-		message2 << "Fullness: [";
+		message.str("Fullness: [");
 		for (int i = 0; i < uber.player.mFullness; ++i)
-			message2 << "|";
+			message << "|";
 		for (int i = 0; i < max(0, uber.player.maxFullness - uber.player.mFullness); ++i)
-			message2 << " ";
-		message2 << "]";
-		uber.printAt(buffer, screenWidth, screenHeight, message2.str(), 0x0F, 25, 1);
+			message << " ";
+		message << "]";
+		uber.printAt(buffer, screenWidth, screenHeight, message.str(), 0x0F, 25, 1);
+
+		message.str("Use arrow keys to move.  Find and collect apples to stay alive!");
+		uber.printAt(buffer, screenWidth, screenHeight, message.str(), sin(time() * 5) > 0 ? 0x0F : 0x08, 0, 62);
 	}
 	else {
 		stringstream message;
